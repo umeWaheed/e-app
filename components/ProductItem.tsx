@@ -1,5 +1,5 @@
 // *********************
-// Role of the component: Product item component 
+// Role of the component: Product item component
 // Name of the component: ProductItem.tsx
 // Developer: Aleksandar Kuzmanovic
 // Version: 1.0
@@ -26,7 +26,9 @@ const ProductItem = ({
         <Image
           src={
             product.mainImage
-              ? `/${product.mainImage}`
+              ? product.mainImage.startsWith("http")
+                ? product.mainImage
+                : `/${product.mainImage}`
               : "/product_placeholder.jpg"
           }
           width="0"
@@ -53,16 +55,16 @@ const ProductItem = ({
             : "text-lg text-white font-semibold"
         }
       >
-        ${product.price}
+        Rs. {product.price} {product.inStock == 0 && "(out of stock)"}
       </p>
 
-      <ProductItemRating productRating={product?.rating} />
-      <Link
+      {/* <ProductItemRating productRating={product?.rating} /> */}
+      {/* <Link
         href={`/product/${product?.slug}`}
         className="block flex justify-center items-center w-full uppercase bg-white px-0 py-2 text-base border border-black border-gray-300 font-bold text-blue-600 shadow-sm hover:bg-black hover:bg-gray-100 focus:outline-none focus:ring-2"
       >
         <p>View product</p>
-      </Link>
+      </Link> */}
     </div>
   );
 };

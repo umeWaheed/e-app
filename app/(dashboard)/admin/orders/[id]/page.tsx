@@ -331,6 +331,17 @@ const AdminSingleOrder = () => {
         </div>
         <div>
           <label className="form-control">
+            <b>
+              <div className="label">
+                <span className="label-text">
+                  Payment Mode: {order.paymentMode}
+                </span>
+              </div>
+            </b>
+          </label>
+        </div>
+        <div>
+          <label className="form-control">
             <div className="label">
               <span className="label-text">Order notice:</span>
             </div>
@@ -347,7 +358,11 @@ const AdminSingleOrder = () => {
           {orderProducts?.map((product) => (
             <div className="flex items-center gap-x-4" key={product?.id}>
               <Image
-                src={product?.product?.mainImage ? `/${product?.product?.mainImage}` : "/product_placeholder.jpg"}
+                src={
+                  product?.product?.mainImage
+                    ? `/${product?.product?.mainImage}`
+                    : "/product_placeholder.jpg"
+                }
                 alt={product?.product?.title}
                 width={50}
                 height={50}
@@ -364,11 +379,10 @@ const AdminSingleOrder = () => {
             </div>
           ))}
           <div className="flex flex-col gap-y-2 mt-10">
-            <p className="text-2xl">Subtotal: ${order?.total}</p>
-            <p className="text-2xl">Tax 20%: ${order?.total / 5}</p>
-            <p className="text-2xl">Shipping: $5</p>
+            <p className="text-2xl">Subtotal: Rs. {order?.total}</p>
+            <p className="text-2xl">Shipping: Rs. 250</p>
             <p className="text-3xl font-semibold">
-              Total: ${order?.total + order?.total / 5 + 5}
+              Total: Rs. {order?.total + 250}
             </p>
           </div>
           <div className="flex gap-x-2 max-sm:flex-col mt-5">

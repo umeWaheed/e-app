@@ -16,10 +16,10 @@ import { useSortStore } from "@/app/_zustand/sortStore";
 import { usePaginationStore } from "@/app/_zustand/paginationStore";
 
 interface InputCategory {
-  inStock: { text: string, isChecked: boolean },
-  outOfStock: { text: string, isChecked: boolean },
-  priceFilter: { text: string, value: number },
-  ratingFilter: { text: string, value: number },
+  inStock: { text: string; isChecked: boolean };
+  outOfStock: { text: string; isChecked: boolean };
+  priceFilter: { text: string; value: number };
+  ratingFilter: { text: string; value: number };
 }
 
 const Filters = () => {
@@ -119,7 +119,7 @@ const Filters = () => {
               })
             }
           />
-          <span>{`Max price: $${inputCategory.priceFilter.value}`}</span>
+          <span>{`Max price: ${inputCategory.priceFilter.value}`}</span>
         </div>
       </div>
 

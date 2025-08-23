@@ -12,7 +12,6 @@ const {
 
 router.route("/").get(getAllProducts).post(createProduct);
 
-
 router
   .route("/:id")
   .get(getProductById)

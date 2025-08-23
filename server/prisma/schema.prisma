@@ -23,15 +23,20 @@ model Product {
   description    String
   manufacturer   String
   inStock        Int                      @default(1)
-  categoryId     String
-  category       Category                 @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categories     Category[]               @relation("ProductCategories")
   customerOrders customer_order_product[]
   Wishlist       Wishlist[]
+  quantity       Int                      @default(1)
 }
 
 model Image {
   imageID   String @id @default(uuid())
   productID String
+  image     String
+}
+
+model Reviews {
+  id   String @id @default(uuid())
   image     String
 }
 
@@ -59,6 +64,7 @@ model Customer_order {
   country     String
   orderNotice String?
   total       Int
+  paymentMode String?                    @default("cod")
   products    customer_order_product[]
 }
 
@@ -74,7 +80,7 @@ model customer_order_product {
 model Category {
   id       String    @id @default(uuid())
   name     String    @unique
-  products Product[] // Define a one-to-many relationship
+  products Product[] @relation("ProductCategories")
 }
 
 model Wishlist {

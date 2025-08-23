@@ -7,9 +7,10 @@ interface Product {
   description: string;
   mainImage: string;
   manufacturer: string;
-  categoryId: string;
-  category: {name: string}?;
+  categoryIds: string[];
+  categories: Category[];
   inStock: number;
+  quantity: number;
 }
 
 interface SingleProductPageProps {
@@ -61,13 +62,13 @@ interface Order {
   country: string;
   orderNotice: string?;
   total: number;
+  paymentMode: string;
 }
 
 interface SingleProductBtnProps {
   product: Product;
   quantityCount: number;
 }
-
 
 interface Category {
   id: string;

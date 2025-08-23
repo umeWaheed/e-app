@@ -4,9 +4,16 @@ import { convertCategoryNameToURLFriendly as convertSlugToURLFriendly } from "@/
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import dynamic from "next/dynamic";
+import * as commands from "@uiw/react-md-editor/commands";
+
+const MDEditor = dynamic(() => import("@uiw/react-md-editor"), { ssr: false });
 
 const AddNewProduct = () => {
   const [product, setProduct] = useState<{
+    quantity: string | number | readonly string[] | undefined;
     title: string;
     price: number;
     manufacturer: string;
@@ -14,7 +21,7 @@ const AddNewProduct = () => {
     mainImage: string;
     description: string;
     slug: string;
-    categoryId: string;
+    categories: string[];
   }>({
     title: "",
     price: 0,
@@ -23,7 +30,8 @@ const AddNewProduct = () => {
     mainImage: "",
     description: "",
     slug: "",
-    categoryId: "",
+    categories: [],
+    quantity: 1,
   });
   const [categories, setCategories] = useState<Category[]>([]);
 
@@ -61,7 +69,8 @@ const AddNewProduct = () => {
           mainImage: "",
           description: "",
           slug: "",
-          categoryId: "",
+          categories: [],
+          quantity: 1,
         });
       })
       .catch((error) => {
@@ -104,7 +113,8 @@ const AddNewProduct = () => {
           mainImage: "",
           description: "",
           slug: "",
-          categoryId: data[0]?.id,
+          categories: data,
+          quantity: 1,
         });
       });
   };
@@ -160,10 +170,15 @@ const AddNewProduct = () => {
             </div>
             <select
               className="select select-bordered"
-              value={product?.categoryId}
-              onChange={(e) =>
-                setProduct({ ...product, categoryId: e.target.value })
-              }
+              value={product?.categories}
+              multiple
+              onChange={(e) => {
+                const options = Array.from(e.target.options);
+                const selected = options
+                  .filter((o) => o.selected)
+                  .map((o) => o.value);
+                setProduct({ ...product, categories: selected });
+              }}
             >
               {categories &&
                 categories.map((category: any) => (
@@ -208,18 +223,20 @@ const AddNewProduct = () => {
         <div>
           <label className="form-control w-full max-w-xs">
             <div className="label">
-              <span className="label-text">Is product in stock?</span>
+              <span className="label-text">Available Quantity</span>
             </div>
-            <select
-              className="select select-bordered"
-              value={product?.inStock}
+            <input
+              type="number"
+              className="input input-bordered w-full max-w-xs"
+              value={product?.quantity}
+              min={0}
               onChange={(e) =>
-                setProduct({ ...product, inStock: Number(e.target.value) })
+                setProduct({
+                  ...product!,
+                  quantity: e.target.value,
+                })
               }
-            >
-              <option value={1}>Yes</option>
-              <option value={0}>No</option>
-            </select>
+            />
           </label>
         </div>
         <div>
@@ -228,7 +245,10 @@ const AddNewProduct = () => {
             className="file-input file-input-bordered file-input-lg w-full max-w-sm"
             onChange={(e: any) => {
               uploadFile(e.target.files[0]);
-              setProduct({ ...product, mainImage: e.target.files[0].name });
+              setProduct({
+                ...product,
+                mainImage: e.target.files[0].name,
+              });
             }}
           />
           {product?.mainImage && (
@@ -246,13 +266,17 @@ const AddNewProduct = () => {
             <div className="label">
               <span className="label-text">Product description:</span>
             </div>
-            <textarea
-              className="textarea textarea-bordered h-24"
-              value={product?.description}
-              onChange={(e) =>
-                setProduct({ ...product, description: e.target.value })
-              }
-            ></textarea>
+            <div>
+              <MDEditor
+                value={product?.description}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    description: e || "",
+                  })
+                }
+              />
+            </div>
           </label>
         </div>
         <div className="flex gap-x-2">

@@ -9,6 +9,7 @@ import {
   formatCategoryName,
 } from "../../../../../utils/categoryFormating";
 import { nanoid } from "nanoid";
+import MDEditor from "@uiw/react-md-editor";
 
 interface DashboardProductDetailsProps {
   params: { id: number };
@@ -53,7 +54,6 @@ const DashboardProductDetails = ({
       product?.title === "" ||
       product?.slug === "" ||
       product?.price.toString() === "" ||
-      product?.manufacturer === "" ||
       product?.description === ""
     ) {
       toast.error("You need to enter values in input fields");
@@ -108,7 +108,7 @@ const DashboardProductDetails = ({
         return res.json();
       })
       .then((data) => {
-        setProduct(data);
+        setProduct({ ...data, categoryIds: data.categories.map((c) => c.id) });
       });
 
     const imagesData = await fetch(`http://localhost:3001/api/images/${id}`, {
@@ -217,18 +217,20 @@ const DashboardProductDetails = ({
         <div>
           <label className="form-control w-full max-w-xs">
             <div className="label">
-              <span className="label-text">Is product in stock?</span>
+              <span className="label-text">Available Quantity</span>
             </div>
-            <select
-              className="select select-bordered"
-              value={product?.inStock}
-              onChange={(e) => {
-                setProduct({ ...product!, inStock: Number(e.target.value) });
-              }}
-            >
-              <option value={1}>Yes</option>
-              <option value={0}>No</option>
-            </select>
+            <input
+              type="number"
+              className="input input-bordered w-full max-w-xs"
+              value={product?.quantity}
+              min={1}
+              onChange={(e) =>
+                setProduct({
+                  ...product!,
+                  quantity: parseInt(e.target.value),
+                })
+              }
+            />
           </label>
         </div>
         {/* Product inStock select input div - end */}
@@ -240,13 +242,16 @@ const DashboardProductDetails = ({
             </div>
             <select
               className="select select-bordered"
-              value={product?.categoryId}
-              onChange={(e) =>
-                setProduct({
-                  ...product!,
-                  categoryId: e.target.value,
-                })
-              }
+              value={product?.categoryIds}
+              defaultValue={product?.categoryIds}
+              multiple
+              onChange={(e) => {
+                const options = Array.from(e.target.options);
+                const selected = options
+                  .filter((o) => o.selected)
+                  .map((o) => o.value);
+                setProduct({ ...product!, categoryIds: selected });
+              }}
             >
               {categories &&
                 categories.map((category: Category) => (
@@ -305,13 +310,17 @@ const DashboardProductDetails = ({
             <div className="label">
               <span className="label-text">Product description:</span>
             </div>
-            <textarea
-              className="textarea textarea-bordered h-24"
-              value={product?.description}
-              onChange={(e) =>
-                setProduct({ ...product!, description: e.target.value })
-              }
-            ></textarea>
+            <div>
+              <MDEditor
+                value={product?.description}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    description: e || "",
+                  })
+                }
+              />
+            </div>
           </label>
         </div>
         {/* Product description div - end */}

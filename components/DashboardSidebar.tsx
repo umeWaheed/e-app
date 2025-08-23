@@ -16,7 +16,6 @@ import { FaGear } from "react-icons/fa6";
 import { FaBagShopping } from "react-icons/fa6";
 import { MdCategory } from "react-icons/md";
 
-
 import Link from "next/link";
 
 const DashboardSidebar = () => {
@@ -52,10 +51,10 @@ const DashboardSidebar = () => {
           <span className="font-normal">Users</span>
         </div>
       </Link>
-      <Link href="/admin/settings">
+      <Link href="/admin/reviews">
         <div className="flex gap-x-2 w-full hover:bg-blue-600 cursor-pointer items-center py-6 pl-5 text-xl text-white">
           <FaGear className="text-2xl" />{" "}
-          <span className="font-normal">Settings</span>
+          <span className="font-normal">Reviews</span>
         </div>
       </Link>
     </div>

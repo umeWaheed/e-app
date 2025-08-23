@@ -17,6 +17,7 @@ async function createCustomerOrder(request, response) {
       country,
       orderNotice,
       total,
+      paymentMode,
     } = request.body;
     const corder = await prisma.customer_order.create({
       data: {
@@ -33,6 +34,7 @@ async function createCustomerOrder(request, response) {
         country,
         orderNotice,
         total,
+        paymentMode,
       },
     });
     return response.status(201).json(corder);

@@ -5,7 +5,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { isValidCardNumber, isValidCreditCardCVVOrCVC, isValidCreditCardExpirationDate, isValidEmailAddressFormat, isValidNameOrLastname } from "@/lib/utils";
+import {
+  isValidCardNumber,
+  isValidCreditCardCVVOrCVC,
+  isValidCreditCardExpirationDate,
+  isValidEmailAddressFormat,
+  isValidNameOrLastname,
+} from "@/lib/utils";
+import { RadioGroup } from "@headlessui/react";
 
 const CheckoutPage = () => {
   const [checkoutForm, setCheckoutForm] = useState({
@@ -13,10 +20,7 @@ const CheckoutPage = () => {
     lastname: "",
     phone: "",
     email: "",
-    cardName: "",
-    cardNumber: "",
-    expirationDate: "",
-    cvc: "",
+    paymentMode: "",
     company: "",
     adress: "",
     apartment: "",
@@ -34,9 +38,7 @@ const CheckoutPage = () => {
       checkoutForm.lastname.length > 0 &&
       checkoutForm.phone.length > 0 &&
       checkoutForm.email.length > 0 &&
-      checkoutForm.cardName.length > 0 &&
-      checkoutForm.expirationDate.length > 0 &&
-      checkoutForm.cvc.length > 0 &&
+      checkoutForm.paymentMode.length > 0 &&
       checkoutForm.company.length > 0 &&
       checkoutForm.adress.length > 0 &&
       checkoutForm.apartment.length > 0 &&
@@ -56,28 +58,6 @@ const CheckoutPage = () => {
 
       if (!isValidEmailAddressFormat(checkoutForm.email)) {
         toast.error("You entered invalid format for email address");
-        return;
-      }
-
-      if (!isValidNameOrLastname(checkoutForm.cardName)) {
-        toast.error("You entered invalid format for card name");
-        return;
-      }
-
-      if (!isValidCardNumber(checkoutForm.cardNumber)) {
-        toast.error("You entered invalid format for credit card number");
-        return;
-      }
-
-      if (!isValidCreditCardExpirationDate(checkoutForm.expirationDate)) {
-        toast.error(
-          "You entered invalid format for credit card expiration date"
-        );
-        return;
-      }
-
-      if (!isValidCreditCardCVVOrCVC(checkoutForm.cvc)) {
-        toast.error("You entered invalid format for credit card CVC or CVV");
         return;
       }
 
@@ -101,10 +81,12 @@ const CheckoutPage = () => {
           city: checkoutForm.city,
           country: checkoutForm.country,
           orderNotice: checkoutForm.orderNotice,
+          paymentMode: checkoutForm.paymentMode,
         }),
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           const orderId: string = data.id;
           // for every product in the order we are calling addOrderProduct function that adds fields to the customer_order_product table
           for (let i = 0; i < products.length; i++) {
@@ -118,10 +100,6 @@ const CheckoutPage = () => {
             lastname: "",
             phone: "",
             email: "",
-            cardName: "",
-            cardNumber: "",
-            expirationDate: "",
-            cvc: "",
             company: "",
             adress: "",
             apartment: "",
@@ -129,6 +107,7 @@ const CheckoutPage = () => {
             country: "",
             postalCode: "",
             orderNotice: "",
+            paymentMode: "",
           });
           clearCart();
           toast.success("Order created successfuly");
@@ -159,8 +138,6 @@ const CheckoutPage = () => {
       }),
     });
   };
-
-  
 
   useEffect(() => {
     if (products.length === 0) {
@@ -207,7 +184,11 @@ const CheckoutPage = () => {
                   className="flex items-start space-x-4 py-6"
                 >
                   <Image
-                    src={product?.image ? `/${product?.image}` : "/product_placeholder.jpg"}
+                    src={
+                      product?.image
+                        ? `/${product?.image}`
+                        : "/product_placeholder.jpg"
+                    }
                     alt={product?.title}
                     width={80}
                     height={80}
@@ -218,7 +199,7 @@ const CheckoutPage = () => {
                     <p className="text-gray-500">x{product?.amount}</p>
                   </div>
                   <p className="flex-none text-base font-medium">
-                    ${product?.price}
+                    Rs. {product?.price}
                   </p>
                   <p></p>
                 </li>
@@ -228,23 +209,18 @@ const CheckoutPage = () => {
             <dl className="hidden space-y-6 border-t border-gray-200 pt-6 text-sm font-medium text-gray-900 lg:block">
               <div className="flex items-center justify-between">
                 <dt className="text-gray-600">Subtotal</dt>
-                <dd>${total}</dd>
+                <dd>Rs. {total}</dd>
               </div>
 
               <div className="flex items-center justify-between">
                 <dt className="text-gray-600">Shipping</dt>
-                <dd>$5</dd>
-              </div>
-
-              <div className="flex items-center justify-between">
-                <dt className="text-gray-600">Taxes</dt>
-                <dd>${total / 5}</dd>
+                <dd>Rs. 250</dd>
               </div>
 
               <div className="flex items-center justify-between border-t border-gray-200 pt-6">
                 <dt className="text-base">Total</dt>
                 <dd className="text-base">
-                  ${total === 0 ? 0 : Math.round(total + total / 5 + 5)}
+                  Rs. {total === 0 ? 0 : total + 250}
                 </dd>
               </div>
             </dl>
@@ -371,104 +347,37 @@ const CheckoutPage = () => {
               </h2>
 
               <div className="mt-6 grid grid-cols-3 gap-x-4 gap-y-6 sm:grid-cols-4">
+                <RadioGroup>
+                  <input
+                    type="radio"
+                    value="cod"
+                    name="payment"
+                    checked={checkoutForm.paymentMode == "cod"}
+                    onChange={(e) =>
+                      setCheckoutForm({
+                        ...checkoutForm,
+                        paymentMode: e.target.value,
+                      })
+                    }
+                  />
+                  CoD
+                  <input
+                    type="radio"
+                    value="prepaid"
+                    name="payment"
+                    checked={checkoutForm.paymentMode == "prepaid"}
+                    onChange={(e) => {
+                      console.log(e.target.value);
+                      setCheckoutForm({
+                        ...checkoutForm,
+                        paymentMode: e.target.value,
+                      });
+                    }}
+                  />
+                  Pay Online
+                </RadioGroup>
                 <div className="col-span-3 sm:col-span-4">
-                  <label
-                    htmlFor="name-on-card"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Name on card
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="name-on-card"
-                      name="name-on-card"
-                      autoComplete="cc-name"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.cardName}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          cardName: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="col-span-3 sm:col-span-4">
-                  <label
-                    htmlFor="card-number"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Card number
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="card-number"
-                      name="card-number"
-                      autoComplete="cc-number"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.cardNumber}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          cardNumber: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="col-span-2 sm:col-span-3">
-                  <label
-                    htmlFor="expiration-date"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Expiration date (MM/YY)
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      name="expiration-date"
-                      id="expiration-date"
-                      autoComplete="cc-exp"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.expirationDate}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          expirationDate: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="cvc"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    CVC or CVV
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      name="cvc"
-                      id="cvc"
-                      autoComplete="csc"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.cvc}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          cvc: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
+                  For bank transfer:
                 </div>
               </div>
             </section>

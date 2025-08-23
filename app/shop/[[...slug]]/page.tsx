@@ -22,7 +22,6 @@ const improveCategoryText = (text: string): string => {
 };
 
 const ShopPage = (slug: any) => {
-  
   return (
     <div className="text-black bg-white">
       <div className=" max-w-screen-2xl mx-auto px-10 max-sm:px-5">
@@ -41,7 +40,6 @@ const ShopPage = (slug: any) => {
             </div>
             <div className="divider"></div>
             <Products slug={slug} />
-            <Pagination />
           </div>
         </div>
       </div>

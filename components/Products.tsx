@@ -10,6 +10,7 @@
 
 import React from "react";
 import ProductItem from "./ProductItem";
+import Pagination from "./Pagination";
 
 const Products = async ({ slug }: any) => {
   // getting all data from URL slug and preparing everything for sending GET request
@@ -18,21 +19,21 @@ const Products = async ({ slug }: any) => {
   const page = slug?.searchParams?.page ? Number(slug?.searchParams?.page) : 1;
 
   let stockMode: string = "lte";
-  
+
   // preparing inStock and out of stock filter for GET request
   // If in stock checkbox is checked, stockMode is "equals"
   if (inStockNum === 1) {
     stockMode = "equals";
   }
- // If out of stock checkbox is checked, stockMode is "lt"
+  // If out of stock checkbox is checked, stockMode is "lt"
   if (outOfStockNum === 1) {
     stockMode = "lt";
   }
-   // If in stock and out of stock checkboxes are checked, stockMode is "lte"
+  // If in stock and out of stock checkboxes are checked, stockMode is "lte"
   if (inStockNum === 1 && outOfStockNum === 1) {
     stockMode = "lte";
   }
-   // If in stock and out of stock checkboxes aren't checked, stockMode is "gt"
+  // If in stock and out of stock checkboxes aren't checked, stockMode is "gt"
   if (inStockNum === 0 && outOfStockNum === 0) {
     stockMode = "gt";
   }
@@ -45,35 +46,29 @@ const Products = async ({ slug }: any) => {
       Number(slug?.searchParams?.rating) || 0
     }&filters[inStock][$${stockMode}]=1&${
       slug?.params?.slug?.length > 0
-        ? `filters[category][$equals]=${slug?.params?.slug}&`
+        ? `filters[categories][$contains]=${slug?.params?.slug}&`
         : ""
     }sort=${slug?.searchParams?.sort}&page=${page}`
   );
 
-  const products = await data.json();
+  const response = await data.json();
+  const products = response.data;
 
-  /*
-    const req = await fetch(
-    `http://localhost:1337/api/products?populate=*&filters[price][$lte]=${
-      searchParams?.price || 1000
-    }${searchParams.women === "true" ? "&filters[category][$eq]=women" : ""}${searchParams.womenNewEdition === "true" ? "&filters[category][$eq]=women%20new%20edition" : ""}&filters[rating][$gte]=${
-      searchParams?.rating || 1
-    }`
-  );
-  const products = await req.json();
-  */
   return (
-    <div className="grid grid-cols-3 justify-items-center gap-x-2 gap-y-5 max-[1300px]:grid-cols-3 max-lg:grid-cols-2 max-[500px]:grid-cols-1">
-      {products.length > 0 ? (
-        products.map((product: Product) => (
-          <ProductItem key={product.id} product={product} color="black" />
-        ))
-      ) : (
-        <h3 className="text-3xl mt-5 text-center w-full col-span-full max-[1000px]:text-2xl max-[500px]:text-lg">
-          No products found for specified query
-        </h3>
-      )}
-    </div>
+    <>
+      <div className="grid grid-cols-3 justify-items-center gap-x-2 gap-y-5 max-[1300px]:grid-cols-3 max-lg:grid-cols-2 max-[500px]:grid-cols-1">
+        {products.length > 0 ? (
+          products.map((product: Product) => (
+            <ProductItem key={product.id} product={product} color="black" />
+          ))
+        ) : (
+          <h3 className="text-3xl mt-5 text-center w-full col-span-full max-[1000px]:text-2xl max-[500px]:text-lg">
+            No products found for specified query
+          </h3>
+        )}
+      </div>
+      {products.length > 0 && <Pagination totalPages={response.totalPages} />}
+    </>
   );
 };
 

@@ -17,7 +17,7 @@ const Hero = () => {
       <div className="grid grid-cols-3 items-center justify-items-center px-10 gap-x-10 max-w-screen-2xl mx-auto h-full max-lg:grid-cols-1 max-lg:py-10 max-lg:gap-y-10">
         <div className="flex flex-col gap-y-5 max-lg:order-last col-span-2">
           <h1 className="text-6xl text-white font-bold mb-3 max-xl:text-5xl max-md:text-4xl max-sm:text-3xl">
-            THE PRODUCT OF THE FUTURE
+            Read read read
           </h1>
           <p className="text-white max-sm:text-sm">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor modi
@@ -35,10 +35,10 @@ const Hero = () => {
           </div>
         </div>
         <Image
-          src="/watch for banner.png"
+          src="/banner.jpg"
           width={400}
           height={400}
-          alt="smart watch"
+          alt="banner image"
           className="max-md:w-[300px] max-md:h-[300px] max-sm:h-[250px] max-sm:w-[250px] w-auto h-auto"
         />
       </div>

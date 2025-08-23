@@ -43,6 +43,7 @@ const AdminOrders = () => {
               <th>Status</th>
               <th>Subtotal</th>
               <th>Date</th>
+              <th>Mode</th>
               <th></th>
             </tr>
           </thead>
@@ -67,7 +68,9 @@ const AdminOrders = () => {
                     <div className="flex items-center gap-5">
                       <div>
                         <div className="font-bold">{order?.name}</div>
-                        <div className="text-sm opacity-50">{order?.country}</div>
+                        <div className="text-sm opacity-50">
+                          {order?.country}
+                        </div>
                       </div>
                     </div>
                   </td>
@@ -79,10 +82,14 @@ const AdminOrders = () => {
                   </td>
 
                   <td>
-                    <p>${order?.total}</p>
+                    <p>Rs. {order?.total}</p>
                   </td>
 
-                  <td>{ new Date(Date.parse(order?.dateTime)).toDateString() }</td>
+                  <td>
+                    {new Date(Date.parse(order?.dateTime)).toDateString()}
+                  </td>
+
+                  <td>{order.paymentMode}</td>
                   <th>
                     <Link
                       href={`/admin/orders/${order?.id}`}
@@ -103,6 +110,7 @@ const AdminOrders = () => {
               <th>Status</th>
               <th>Subtotal</th>
               <th>Date</th>
+              <th>Mode</th>
               <th></th>
             </tr>
           </tfoot>

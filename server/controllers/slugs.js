@@ -8,11 +8,12 @@ async function getProductBySlug(request, response) {
       slug: slug,
     },
     include: {
-      category: true
+      categories: true,
     },
   });
 
   const foundProduct = product[0]; // Assuming there's only one product with that slug
+  console.log(foundProduct);
   if (!foundProduct) {
     return response.status(404).json({ error: "Product not found" });
   }

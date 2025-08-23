@@ -47,7 +47,11 @@ const CartPage = () => {
                       <Image
                         width={192}
                         height={192}
-                        src={product?.image ? `/${product.image}` : "/product_placeholder.jpg"}
+                        src={
+                          product?.image
+                            ? `/${product.image}`
+                            : "/product_placeholder.jpg"
+                        }
                         alt="laptop image"
                         className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
                       />
@@ -73,7 +77,7 @@ const CartPage = () => {
                         ) : null}
                       </div> */}
                           <p className="mt-1 text-sm font-medium text-gray-900">
-                            ${product.price}
+                            Rs. {product.price}
                           </p>
                         </div>
 
@@ -129,7 +133,7 @@ const CartPage = () => {
                 <div className="flex items-center justify-between">
                   <dt className="text-sm text-gray-600">Subtotal</dt>
                   <dd className="text-sm font-medium text-gray-900">
-                    ${total}
+                    Rs. {total}
                   </dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
@@ -148,34 +152,14 @@ const CartPage = () => {
                       />
                     </a>
                   </dt>
-                  <dd className="text-sm font-medium text-gray-900">$5.00</dd>
-                </div>
-                <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-                  <dt className="flex text-sm text-gray-600">
-                    <span>Tax estimate</span>
-                    <a
-                      href="#"
-                      className="ml-2 flex-shrink-0 text-gray-400 hover:text-gray-500"
-                    >
-                      <span className="sr-only">
-                        Learn more about how tax is calculated
-                      </span>
-                      <FaCircleQuestion
-                        className="h-5 w-5"
-                        aria-hidden="true"
-                      />
-                    </a>
-                  </dt>
-                  <dd className="text-sm font-medium text-gray-900">
-                    ${total / 5}
-                  </dd>
+                  <dd className="text-sm font-medium text-gray-900">Rs. 250</dd>
                 </div>
                 <div className="flex items-center justify-between border-t border-gray-200 pt-4">
                   <dt className="text-base font-medium text-gray-900">
                     Order total
                   </dt>
                   <dd className="text-base font-medium text-gray-900">
-                    ${total === 0 ? 0 : Math.round(total + total / 5 + 5)}
+                    Rs. {total === 0 ? 0 : total + 250}
                   </dd>
                 </div>
               </dl>

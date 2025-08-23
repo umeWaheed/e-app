@@ -22,6 +22,7 @@ import HeartElement from "./HeartElement";
 import { signOut, useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useWishlistStore } from "@/app/_zustand/wishlistStore";
+import Navbar from "./Navbar";
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -44,19 +45,27 @@ const Header = () => {
       title: string;
       price: number;
       image: string;
-      slug:string
+      slug: string;
       stockAvailabillity: number;
     }[] = [];
-    
-    wishlist.map((item: any) => productArray.push({id: item?.product?.id, title: item?.product?.title, price: item?.product?.price, image: item?.product?.mainImage, slug: item?.product?.slug, stockAvailabillity: item?.product?.inStock}));
-    
+
+    wishlist.map((item: any) =>
+      productArray.push({
+        id: item?.product?.id,
+        title: item?.product?.title,
+        price: item?.product?.price,
+        image: item?.product?.mainImage,
+        slug: item?.product?.slug,
+        stockAvailabillity: item?.product?.inStock,
+      })
+    );
+
     setWishlist(productArray);
   };
 
   // getting user by email so I can get his user id
   const getUserByEmail = async () => {
     if (session?.user?.email) {
-      
       fetch(`http://localhost:3001/api/users/email/${session?.user?.email}`, {
         cache: "no-store",
       })
@@ -72,62 +81,73 @@ const Header = () => {
   }, [session?.user?.email, wishlist.length]);
 
   return (
-    <header className="bg-white">
-      <HeaderTop />
-      {pathname.startsWith("/admin") === false && (
-        <div className="h-32 bg-white flex items-center justify-between px-16 max-[1320px]:px-16 max-md:px-6 max-lg:flex-col max-lg:gap-y-7 max-lg:justify-center max-lg:h-60 max-w-screen-2xl mx-auto">
-          <Link href="/">
-            <img src="/logo v1 svg.svg" width={300} height={300} alt="singitronic logo" className="relative right-5 max-[1023px]:w-56" />
-          </Link>
-          <SearchInput />
-          <div className="flex gap-x-10">
-            <HeartElement wishQuantity={wishQuantity} />
-            <CartElement />
-          </div>
-        </div>
-      )}
-      {pathname.startsWith("/admin") === true && (
-        <div className="flex justify-between h-32 bg-white items-center px-16 max-[1320px]:px-10  max-w-screen-2xl mx-auto max-[400px]:px-5">
-          <Link href="/">
-            <Image
-              src="/logo v1.png"
-              width={130}
-              height={130}
-              alt="singitronic logo"
-              className="w-56 h-auto"
-            />
-          </Link>
-          <div className="flex gap-x-5 items-center">
-            <FaBell className="text-xl" />
-            <div className="dropdown dropdown-end">
-              <div tabIndex={0} role="button" className="w-10">
+    <>
+      <header className="bg-white">
+        <HeaderTop />
+        {pathname.startsWith("/admin") === false && (
+          <>
+            <div className="h-32 bg-white flex items-center justify-between px-16 max-[1320px]:px-16 max-md:px-6 max-lg:flex-col max-lg:gap-y-7 max-lg:justify-center max-lg:h-60 max-w-screen-2xl mx-auto">
+              <Link href="/">
                 <Image
-                  src="/randomuser.jpg"
-                  alt="random profile photo"
-                  width={30}
-                  height={30}
-                  className="w-full h-full rounded-full"
+                  src="/logo.jpeg"
+                  width={100}
+                  height={100}
+                  alt="BookHeaven logo"
+                  className="relative right-5 max-[1023px]:w-56"
                 />
+              </Link>
+              <SearchInput />
+              <div className="flex gap-x-10">
+                <HeartElement wishQuantity={wishQuantity} />
+                <CartElement />
               </div>
-              <ul
-                tabIndex={0}
-                className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-              >
-                <li>
-                  <Link href="/admin">Dashboard</Link>
-                </li>
-                <li>
-                  <a>Profile</a>
-                </li>
-                <li onClick={handleLogout}>
-                  <a href="#">Logout</a>
-                </li>
-              </ul>
+            </div>
+            <Navbar />
+          </>
+        )}
+        {pathname.startsWith("/admin") === true && (
+          <div className="flex justify-between h-32 bg-white items-center px-16 max-[1320px]:px-10  max-w-screen-2xl mx-auto max-[400px]:px-5">
+            <Link href="/">
+              <Image
+                src="/logo.jpeg"
+                width={130}
+                height={130}
+                alt="BookHeaven logo"
+                className="w-56 h-auto"
+              />
+            </Link>
+            <div className="flex gap-x-5 items-center">
+              <FaBell className="text-xl" />
+              <div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="w-10">
+                  <Image
+                    src="/randomuser.jpg"
+                    alt="random profile photo"
+                    width={30}
+                    height={30}
+                    className="w-full h-full rounded-full"
+                  />
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+                >
+                  <li>
+                    <Link href="/admin">Dashboard</Link>
+                  </li>
+                  <li>
+                    <a>Profile</a>
+                  </li>
+                  <li onClick={handleLogout}>
+                    <a href="#">Logout</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </header>
+        )}
+      </header>
+    </>
   );
 };
 
