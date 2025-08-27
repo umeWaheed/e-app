@@ -13,7 +13,9 @@ import Image from "next/image";
 import React from "react";
 
 const Reviews = async () => {
-  const data = await fetch("http://localhost:3001/api/reviews");
+  const data = await fetch(
+    `http://${process.env.SERVER_URL}:${process.env.PORT}/api/reviews`
+  );
   const reviews = await data.json();
 
   return (

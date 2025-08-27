@@ -18,7 +18,9 @@ const AdminOrders = () => {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      const response = await fetch("http://localhost:3001/api/orders");
+      const response = await fetch(
+        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/orders`
+      );
       const data = await response.json();
       setOrders(data);
     };

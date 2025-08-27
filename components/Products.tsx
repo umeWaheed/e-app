@@ -40,7 +40,9 @@ const Products = async ({ slug }: any) => {
 
   // sending API request with filtering, sorting and pagination for getting all products
   const data = await fetch(
-    `http://localhost:3001/api/products?filters[price][$lte]=${
+    `http://${
+      process.env.SERVER_URL
+    }/{process.env.PORT}/api/products?filters[price][$lte]=${
       slug?.searchParams?.price || 3000
     }&filters[rating][$gte]=${
       Number(slug?.searchParams?.rating) || 0

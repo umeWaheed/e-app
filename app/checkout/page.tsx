@@ -62,28 +62,31 @@ const CheckoutPage = () => {
       }
 
       // sending API request for creating a order
-      const response = fetch("http://localhost:3001/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: checkoutForm.name,
-          lastname: checkoutForm.lastname,
-          phone: checkoutForm.phone,
-          email: checkoutForm.email,
-          company: checkoutForm.company,
-          adress: checkoutForm.adress,
-          apartment: checkoutForm.apartment,
-          postalCode: checkoutForm.postalCode,
-          status: "processing",
-          total: total,
-          city: checkoutForm.city,
-          country: checkoutForm.country,
-          orderNotice: checkoutForm.orderNotice,
-          paymentMode: checkoutForm.paymentMode,
-        }),
-      })
+      const response = fetch(
+        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/orders`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: checkoutForm.name,
+            lastname: checkoutForm.lastname,
+            phone: checkoutForm.phone,
+            email: checkoutForm.email,
+            company: checkoutForm.company,
+            adress: checkoutForm.adress,
+            apartment: checkoutForm.apartment,
+            postalCode: checkoutForm.postalCode,
+            status: "processing",
+            total: total,
+            city: checkoutForm.city,
+            country: checkoutForm.country,
+            orderNotice: checkoutForm.orderNotice,
+            paymentMode: checkoutForm.paymentMode,
+          }),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
@@ -112,7 +115,7 @@ const CheckoutPage = () => {
           clearCart();
           toast.success("Order created successfuly");
           setTimeout(() => {
-            router.push("/");
+            router.push("/thankyou");
           }, 1000);
         });
     } else {
@@ -126,17 +129,20 @@ const CheckoutPage = () => {
     productQuantity: number
   ) => {
     // sending API POST request for the table customer_order_product that does many to many relatioship for order and product
-    const response = await fetch("http://localhost:3001/api/order-product", {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        customerOrderId: orderId,
-        productId: productId,
-        quantity: productQuantity,
-      }),
-    });
+    const response = await fetch(
+      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/order-product`,
+      {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          customerOrderId: orderId,
+          productId: productId,
+          quantity: productQuantity,
+        }),
+      }
+    );
   };
 
   useEffect(() => {
@@ -144,7 +150,7 @@ const CheckoutPage = () => {
       toast.error("You don't have items in your cart");
       router.push("/cart");
     }
-  }, []);
+  }, [products.length, router]);
 
   return (
     <div className="bg-white">

@@ -28,7 +28,10 @@ const DashboardProductDetails = ({
     const requestOptions = {
       method: "DELETE",
     };
-    fetch(`http://localhost:3001/api/products/${id}`, requestOptions)
+    fetch(
+      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products/${id}`,
+      requestOptions
+    )
       .then((response) => {
         if (response.status !== 204) {
           if (response.status === 400) {
@@ -65,7 +68,10 @@ const DashboardProductDetails = ({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(product),
     };
-    fetch(`http://localhost:3001/api/products/${id}`, requestOptions)
+    fetch(
+      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products/${id}`,
+      requestOptions
+    )
       .then((response) => {
         if (response.status === 200) {
           return response.json();
@@ -85,10 +91,13 @@ const DashboardProductDetails = ({
     formData.append("uploadedFile", file);
 
     try {
-      const response = await fetch("http://localhost:3001/api/main-image", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/main-image`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -103,7 +112,9 @@ const DashboardProductDetails = ({
 
   // fetching main product data including other product images
   const fetchProductData = async () => {
-    fetch(`http://localhost:3001/api/products/${id}`)
+    fetch(
+      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products/${id}`
+    )
       .then((res) => {
         return res.json();
       })
@@ -111,16 +122,19 @@ const DashboardProductDetails = ({
         setProduct({ ...data, categoryIds: data.categories.map((c) => c.id) });
       });
 
-    const imagesData = await fetch(`http://localhost:3001/api/images/${id}`, {
-      cache: "no-store",
-    });
+    const imagesData = await fetch(
+      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/images/${id}`,
+      {
+        cache: "no-store",
+      }
+    );
     const images = await imagesData.json();
     setOtherImages((currentImages) => images);
   };
 
   // fetching all product categories. It will be used for displaying categories in select category input
   const fetchCategories = async () => {
-    fetch(`http://localhost:3001/api/categories`)
+    fetch(`http://${process.env.SERVER_URL}:${process.env.PORT}/api/categories`)
       .then((res) => {
         return res.json();
       })
@@ -132,7 +146,7 @@ const DashboardProductDetails = ({
   useEffect(() => {
     fetchCategories();
     fetchProductData();
-  }, [id]);
+  }, [fetchProductData, id]);
 
   return (
     <div className="bg-white flex justify-start max-w-screen-2xl mx-auto xl:h-full max-xl:flex-col max-xl:gap-y-5">

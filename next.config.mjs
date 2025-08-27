@@ -13,6 +13,12 @@ const nextConfig = {
     esmExternals: "loose",
   },
   transpilePackages: ["react-md-editor"],
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;

@@ -22,7 +22,10 @@ const AddNewReview = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(review),
     };
-    fetch(`http://localhost:3001/api/reviews`, requestOptions)
+    fetch(
+      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/reviews`,
+      requestOptions
+    )
       .then((response) => {
         if (response.status === 201) {
           return response.json();
@@ -48,10 +51,13 @@ const AddNewReview = () => {
     formData.append("uploadedFile", file);
 
     try {
-      const response = await fetch("http://localhost:3001/api/main-image", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/main-image`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
