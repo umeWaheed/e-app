@@ -23,7 +23,7 @@ interface ImageItem {
 const SingleProductPage = async ({ params }: SingleProductPageProps) => {
   // sending API request for a single product with a given product slug
   const data = await fetch(
-    `http://${process.env.SERVER_URL}:${process.env.PORT}/api/slugs/${params.productSlug}`,
+    `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/slugs/${params.productSlug}`,
     {
       cache: "no-store", // to prevent cached pages
     }
@@ -32,7 +32,7 @@ const SingleProductPage = async ({ params }: SingleProductPageProps) => {
 
   // sending API request for more than 1 product image if it exists
   const imagesData = await fetch(
-    `http://${process.env.SERVER_URL}:${process.env.PORT}/api/images/${product.id}`
+    `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/images/${product.id}`
   );
   const images = await imagesData.json();
 

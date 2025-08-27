@@ -20,7 +20,7 @@ const DashboardNewCategoryPage = () => {
       };
       // sending API request for creating new cateogry
       fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/categories`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/categories`,
         requestOptions
       )
         .then((response) => {

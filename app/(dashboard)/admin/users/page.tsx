@@ -9,7 +9,9 @@ const DashboardUsers = () => {
 
   useEffect(() => {
     // sending API request for all users
-    fetch(`http://${process.env.SERVER_URL}:${process.env.PORT}/api/users`)
+    fetch(
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users`
+    )
       .then((res) => {
         return res.json();
       })

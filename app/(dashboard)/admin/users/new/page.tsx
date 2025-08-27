@@ -29,7 +29,7 @@ const DashboardCreateNewUser = () => {
           body: JSON.stringify(userInput),
         };
         fetch(
-          `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users`,
+          `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users`,
           requestOptions
         )
           .then((response) => {

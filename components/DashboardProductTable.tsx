@@ -20,7 +20,7 @@ const DashboardProductTable = () => {
 
   useEffect(() => {
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products?mode=admin`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products?mode=admin`,
       { cache: "no-store" }
     )
       .then((res) => {

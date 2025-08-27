@@ -52,7 +52,7 @@ const AdminSingleOrder = () => {
   useEffect(() => {
     const fetchOrderData = async () => {
       const response = await fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/orders/${params?.id}`
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/orders/${params?.id}`
       );
       const data: Order = await response.json();
       setOrder(data);
@@ -60,7 +60,7 @@ const AdminSingleOrder = () => {
 
     const fetchOrderProducts = async () => {
       const response = await fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/order-product/${params?.id}`
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/order-product/${params?.id}`
       );
       const data: OrderProduct[] = await response.json();
       setOrderProducts(data);
@@ -99,7 +99,7 @@ const AdminSingleOrder = () => {
       }
 
       fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/orders/${order?.id}`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/orders/${order?.id}`,
         {
           method: "PUT", // or 'PUT'
           headers: {
@@ -129,11 +129,11 @@ const AdminSingleOrder = () => {
     };
 
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/order-product/${order?.id}`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/order-product/${order?.id}`,
       requestOptions
     ).then((response) => {
       fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/orders/${order?.id}`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/orders/${order?.id}`,
         requestOptions
       ).then((response) => {
         toast.success("Order deleted successfully");

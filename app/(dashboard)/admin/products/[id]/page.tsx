@@ -29,7 +29,7 @@ const DashboardProductDetails = ({
       method: "DELETE",
     };
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products/${id}`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products/${id}`,
       requestOptions
     )
       .then((response) => {
@@ -69,7 +69,7 @@ const DashboardProductDetails = ({
       body: JSON.stringify(product),
     };
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products/${id}`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products/${id}`,
       requestOptions
     )
       .then((response) => {
@@ -92,7 +92,7 @@ const DashboardProductDetails = ({
 
     try {
       const response = await fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/main-image`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/main-image`,
         {
           method: "POST",
           body: formData,
@@ -113,7 +113,7 @@ const DashboardProductDetails = ({
   // fetching main product data including other product images
   const fetchProductData = async () => {
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products/${id}`
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products/${id}`
     )
       .then((res) => {
         return res.json();
@@ -123,7 +123,7 @@ const DashboardProductDetails = ({
       });
 
     const imagesData = await fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/images/${id}`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/images/${id}`,
       {
         cache: "no-store",
       }
@@ -134,7 +134,9 @@ const DashboardProductDetails = ({
 
   // fetching all product categories. It will be used for displaying categories in select category input
   const fetchCategories = async () => {
-    fetch(`http://${process.env.SERVER_URL}:${process.env.PORT}/api/categories`)
+    fetch(
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/categories`
+    )
       .then((res) => {
         return res.json();
       })

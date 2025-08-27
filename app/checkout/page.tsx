@@ -63,7 +63,7 @@ const CheckoutPage = () => {
 
       // sending API request for creating a order
       const response = fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/orders`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/orders`,
         {
           method: "POST",
           headers: {
@@ -130,7 +130,7 @@ const CheckoutPage = () => {
   ) => {
     // sending API POST request for the table customer_order_product that does many to many relatioship for order and product
     const response = await fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/order-product`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/order-product`,
       {
         method: "POST", // or 'PUT'
         headers: {

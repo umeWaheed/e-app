@@ -15,7 +15,7 @@ import Heading from "./Heading";
 const ProductsSection = async () => {
   // sending API request for getting all products
   const data = await fetch(
-    `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products`
+    `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products`
   );
   const products = await data.json();
   return (

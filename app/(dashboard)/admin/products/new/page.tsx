@@ -52,7 +52,7 @@ const AddNewProduct = () => {
       body: JSON.stringify(product),
     };
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/products`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products`,
       requestOptions
     )
       .then((response) => {
@@ -87,7 +87,7 @@ const AddNewProduct = () => {
 
     try {
       const response = await fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/main-image`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/main-image`,
         {
           method: "POST",
           body: formData,
@@ -105,7 +105,9 @@ const AddNewProduct = () => {
   };
 
   const fetchCategories = async () => {
-    fetch(`http://${process.env.SERVER_URL}:${process.env.PORT}/api/categories`)
+    fetch(
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/categories`
+    )
       .then((res) => {
         return res.json();
       })

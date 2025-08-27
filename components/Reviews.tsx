@@ -14,7 +14,7 @@ import React from "react";
 
 const Reviews = async () => {
   const data = await fetch(
-    `http://${process.env.SERVER_URL}:${process.env.PORT}/api/reviews`
+    `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/reviews`
   );
   const reviews = await data.json();
 

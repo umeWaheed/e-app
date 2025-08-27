@@ -28,7 +28,7 @@ const DashboardSingleUserPage = ({
       method: "DELETE",
     };
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/${id}`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/${id}`,
       requestOptions
     )
       .then((response) => {
@@ -66,7 +66,7 @@ const DashboardSingleUserPage = ({
           }),
         };
         fetch(
-          `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/${id}`,
+          `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/${id}`,
           requestOptions
         )
           .then((response) => {
@@ -93,7 +93,7 @@ const DashboardSingleUserPage = ({
   useEffect(() => {
     // sending API request for a single user
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/${id}`
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/${id}`
     )
       .then((res) => {
         return res.json();

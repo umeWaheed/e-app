@@ -11,7 +11,7 @@ const WishlistPage = () => {
 
   const getWishlistByUserId = async (id: string) => {
     const response = await fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/wishlist/${id}`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/wishlist/${id}`,
       {
         cache: "no-store",
       }
@@ -44,7 +44,7 @@ const WishlistPage = () => {
   const getUserByEmail = async () => {
     if (session?.user?.email) {
       fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/email/${session?.user?.email}`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/email/${session?.user?.email}`,
         {
           cache: "no-store",
         }

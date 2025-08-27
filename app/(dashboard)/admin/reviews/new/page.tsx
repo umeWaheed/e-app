@@ -23,7 +23,7 @@ const AddNewReview = () => {
       body: JSON.stringify(review),
     };
     fetch(
-      `http://${process.env.SERVER_URL}:${process.env.PORT}/api/reviews`,
+      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/reviews`,
       requestOptions
     )
       .then((response) => {
@@ -52,7 +52,7 @@ const AddNewReview = () => {
 
     try {
       const response = await fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/main-image`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/main-image`,
         {
           method: "POST",
           body: formData,

@@ -19,7 +19,7 @@ export default async function Layout({
   let email: string = await session?.user?.email;
 
   const res = await fetch(
-    `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/email/${email}`
+    `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/email/${email}`
   );
   const data = await res.json();
   // redirecting user to the home page if not admin

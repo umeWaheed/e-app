@@ -8,9 +8,9 @@ interface Props {
 // sending api request for search results for a given search text
 const SearchPage = async ({ searchParams: { search } }: Props) => {
   const data = await fetch(
-    `http://${process.env.SERVER_URL}:${process.env.PORT}/api/search?query=${
-      search || ""
-    }`
+    `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${
+      process.env.NEXT_PUBLIC_PORT
+    }/api/search?query=${search || ""}`
   );
 
   const products = await data.json();

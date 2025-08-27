@@ -32,7 +32,7 @@ const AddToWishlistBtn = ({ product, slug }: AddToWishlistBtnProps) => {
     if (session?.user?.email) {
       // sending fetch request to get user id because we will need it for saving wish item
       fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/email/${session?.user?.email}`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/email/${session?.user?.email}`,
         {
           cache: "no-store",
         }
@@ -40,7 +40,7 @@ const AddToWishlistBtn = ({ product, slug }: AddToWishlistBtnProps) => {
         .then((response) => response.json())
         .then((data) =>
           fetch(
-            `http://${process.env.SERVER_URL}:${process.env.PORT}/api/wishlist`,
+            `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/wishlist`,
             {
               method: "POST",
               headers: {
@@ -75,7 +75,7 @@ const AddToWishlistBtn = ({ product, slug }: AddToWishlistBtnProps) => {
     if (session?.user?.email) {
       // sending fetch request to get user id because we will need to delete wish item
       fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/email/${session?.user?.email}`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/email/${session?.user?.email}`,
         {
           cache: "no-store",
         }
@@ -83,7 +83,7 @@ const AddToWishlistBtn = ({ product, slug }: AddToWishlistBtnProps) => {
         .then((response) => response.json())
         .then((data) => {
           return fetch(
-            `http://${process.env.SERVER_URL}:${process.env.PORT}/api/wishlist/${data?.id}/${product?.id}`,
+            `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/wishlist/${data?.id}/${product?.id}`,
             {
               method: "DELETE",
             }
@@ -100,7 +100,7 @@ const AddToWishlistBtn = ({ product, slug }: AddToWishlistBtnProps) => {
     // sending fetch request to get user id because we will need it for cheching whether the product is in wishlist
     if (session?.user?.email) {
       fetch(
-        `http://${process.env.SERVER_URL}:${process.env.PORT}/api/users/email/${session?.user?.email}`,
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/users/email/${session?.user?.email}`,
         {
           cache: "no-store",
         }
@@ -109,7 +109,7 @@ const AddToWishlistBtn = ({ product, slug }: AddToWishlistBtnProps) => {
         .then((data) => {
           // checking is product in wishlist
           return fetch(
-            `http://${process.env.SERVER_URL}:${process.env.PORT}/api/wishlist/${data?.id}/${product?.id}`
+            `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/wishlist/${data?.id}/${product?.id}`
           );
         })
         .then((response) => response.json())
