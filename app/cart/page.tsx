@@ -52,7 +52,7 @@ const CartPage = () => {
                             ? `/${product.image}`
                             : "/product_placeholder.jpg"
                         }
-                        alt="laptop image"
+                        alt="image"
                         className="h-24 w-24 rounded-md object-cover object-center sm:h-48 sm:w-48"
                       />
                     </div>

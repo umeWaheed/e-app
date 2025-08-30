@@ -69,7 +69,7 @@ const SingleProductPage = async ({ params }: SingleProductPageProps) => {
                   }
                   width={100}
                   height={100}
-                  alt="laptop image"
+                  alt="image"
                   className="w-auto h-auto"
                 />
               ))}

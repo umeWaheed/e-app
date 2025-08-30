@@ -18,7 +18,20 @@ interface DashboardProductDetailsProps {
 const DashboardProductDetails = ({
   params: { id },
 }: DashboardProductDetailsProps) => {
-  const [product, setProduct] = useState<Product>();
+  const [product, setProduct] = useState<Product>({
+    id: "0",
+    title: "",
+    slug: "",
+    price: 0,
+    description: "",
+    manufacturer: "",
+    quantity: 0,
+    mainImage: "",
+    categoryIds: [],
+    rating: 0,
+    inStock: 0,
+    categories: [],
+  });
   const [categories, setCategories] = useState<Category[]>();
   const [otherImages, setOtherImages] = useState<OtherImages[]>([]);
   const router = useRouter();
@@ -111,26 +124,6 @@ const DashboardProductDetails = ({
   };
 
   // fetching main product data including other product images
-  const fetchProductData = async () => {
-    fetch(
-      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products/${id}`
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setProduct({ ...data, categoryIds: data.categories.map((c) => c.id) });
-      });
-
-    const imagesData = await fetch(
-      `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/images/${id}`,
-      {
-        cache: "no-store",
-      }
-    );
-    const images = await imagesData.json();
-    setOtherImages((currentImages) => images);
-  };
 
   // fetching all product categories. It will be used for displaying categories in select category input
   const fetchCategories = async () => {
@@ -146,9 +139,33 @@ const DashboardProductDetails = ({
   };
 
   useEffect(() => {
+    const fetchProductData = async () => {
+      fetch(
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/products/${id}`
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setProduct({
+            ...data,
+            categoryIds: data.categories.map((c) => c.id),
+          });
+        });
+
+      const imagesData = await fetch(
+        `http://${process.env.NEXT_PUBLIC_SERVER_URL}:${process.env.NEXT_PUBLIC_PORT}/api/images/${id}`,
+        {
+          cache: "no-store",
+        }
+      );
+      const images = await imagesData.json();
+      setOtherImages((currentImages) => images);
+    };
+
     fetchCategories();
     fetchProductData();
-  }, [fetchProductData, id]);
+  }, [id]);
 
   return (
     <div className="bg-white flex justify-start max-w-screen-2xl mx-auto xl:h-full max-xl:flex-col max-xl:gap-y-5">
@@ -259,7 +276,6 @@ const DashboardProductDetails = ({
             <select
               className="select select-bordered"
               value={product?.categoryIds}
-              defaultValue={product?.categoryIds}
               multiple
               onChange={(e) => {
                 const options = Array.from(e.target.options);
@@ -296,7 +312,13 @@ const DashboardProductDetails = ({
           />
           {product?.mainImage && (
             <Image
-              src={`/` + product?.mainImage}
+              src={
+                product.mainImage
+                  ? product.mainImage.startsWith("http")
+                    ? product.mainImage
+                    : `/${product.mainImage}`
+                  : "/product_placeholder.jpg"
+              }
               alt={product?.title}
               className="w-auto h-auto mt-2"
               width={100}
@@ -332,7 +354,7 @@ const DashboardProductDetails = ({
                 onChange={(e) =>
                   setProduct({
                     ...product,
-                    description: e || "",
+                    description: e,
                   })
                 }
               />

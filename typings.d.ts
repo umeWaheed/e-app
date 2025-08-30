@@ -4,7 +4,7 @@ interface Product {
   title: string;
   price: number;
   rating: number;
-  description: string;
+  description?: string;
   mainImage: string;
   manufacturer: string;
   categoryIds: string[];

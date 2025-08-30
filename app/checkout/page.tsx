@@ -21,13 +21,8 @@ const CheckoutPage = () => {
     phone: "",
     email: "",
     paymentMode: "",
-    company: "",
     adress: "",
-    apartment: "",
     city: "",
-    country: "",
-    postalCode: "",
-    orderNotice: "",
   });
   const { products, total, clearCart } = useProductStore();
   const router = useRouter();
@@ -39,12 +34,8 @@ const CheckoutPage = () => {
       checkoutForm.phone.length > 0 &&
       checkoutForm.email.length > 0 &&
       checkoutForm.paymentMode.length > 0 &&
-      checkoutForm.company.length > 0 &&
       checkoutForm.adress.length > 0 &&
-      checkoutForm.apartment.length > 0 &&
-      checkoutForm.city.length > 0 &&
-      checkoutForm.country.length > 0 &&
-      checkoutForm.postalCode.length > 0
+      checkoutForm.city.length > 0
     ) {
       if (!isValidNameOrLastname(checkoutForm.name)) {
         toast.error("You entered invalid format for name");
@@ -74,15 +65,10 @@ const CheckoutPage = () => {
             lastname: checkoutForm.lastname,
             phone: checkoutForm.phone,
             email: checkoutForm.email,
-            company: checkoutForm.company,
             adress: checkoutForm.adress,
-            apartment: checkoutForm.apartment,
-            postalCode: checkoutForm.postalCode,
             status: "processing",
             total: total,
             city: checkoutForm.city,
-            country: checkoutForm.country,
-            orderNotice: checkoutForm.orderNotice,
             paymentMode: checkoutForm.paymentMode,
           }),
         }
@@ -103,13 +89,8 @@ const CheckoutPage = () => {
             lastname: "",
             phone: "",
             email: "",
-            company: "",
             adress: "",
-            apartment: "",
             city: "",
-            country: "",
-            postalCode: "",
-            orderNotice: "",
             paymentMode: "",
           });
           clearCart();
@@ -383,7 +364,16 @@ const CheckoutPage = () => {
                   Pay Online
                 </RadioGroup>
                 <div className="col-span-3 sm:col-span-4">
-                  For bank transfer:
+                  <p className="mb-3 font-bold">For online payment:</p>
+                  <div className="bg-gray-200">
+                    <div>03298474530</div>
+                    <div>Kainat Waheed</div>
+                    <div className="mb-3">Sadapay</div>
+                  </div>
+                  <p className="font-bold">
+                    Kindly share screenshot of payment on our WhatsApp number
+                    03298474530
+                  </p>
                 </div>
               </div>
             </section>
@@ -397,30 +387,6 @@ const CheckoutPage = () => {
               </h2>
 
               <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="company"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Company
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.company}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          company: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-
                 <div className="sm:col-span-3">
                   <label
                     htmlFor="address"
@@ -440,30 +406,6 @@ const CheckoutPage = () => {
                         setCheckoutForm({
                           ...checkoutForm,
                           adress: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="apartment"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Apartment, suite, etc.
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="apartment"
-                      name="apartment"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.apartment}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          apartment: e.target.value,
                         })
                       }
                     />
@@ -492,80 +434,6 @@ const CheckoutPage = () => {
                         })
                       }
                     />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="region"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Country
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="region"
-                      name="region"
-                      autoComplete="address-level1"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.country}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          country: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="postal-code"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Postal code
-                  </label>
-                  <div className="mt-1">
-                    <input
-                      type="text"
-                      id="postal-code"
-                      name="postal-code"
-                      autoComplete="postal-code"
-                      className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
-                      value={checkoutForm.postalCode}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          postalCode: e.target.value,
-                        })
-                      }
-                    />
-                  </div>
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label
-                    htmlFor="order-notice"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Order notice
-                  </label>
-                  <div className="mt-1">
-                    <textarea
-                      className="textarea textarea-bordered textarea-lg w-full"
-                      id="order-notice"
-                      name="order-notice"
-                      autoComplete="order-notice"
-                      value={checkoutForm.orderNotice}
-                      onChange={(e) =>
-                        setCheckoutForm({
-                          ...checkoutForm,
-                          orderNotice: e.target.value,
-                        })
-                      }
-                    ></textarea>
                   </div>
                 </div>
               </div>

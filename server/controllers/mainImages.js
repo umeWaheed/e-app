@@ -1,8 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const { promisify } = require("util");
-const fs = require("fs");
-const convert = require("heic-convert");
 
 async function uploadMainImage(req, res) {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -13,16 +10,6 @@ async function uploadMainImage(req, res) {
   const uploadedFile = req.files.uploadedFile;
   const newFileName = uploadedFile.name;
   try {
-    if (uploadedFile.name.endsWith("heic")) {
-      const inputBuffer = uploadedFile.data;
-      const outputBuffer = await convert({
-        buffer: inputBuffer,
-        format: "JPEG",
-        quality: 1,
-      });
-      newFileName = uploadedFile.name.replace(/\.heic$/i, ".jpeg");
-    }
-
     //const outputPath = path.join(__dirname, "../../public", newFileName);
 
     //await writeFile(outputPath, outputBuffer);

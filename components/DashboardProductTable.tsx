@@ -82,8 +82,10 @@ const DashboardProductTable = () => {
                             width={48}
                             height={48}
                             src={
-                              product?.mainImage
-                                ? `/${product?.mainImage}`
+                              product.mainImage
+                                ? product.mainImage.startsWith("http")
+                                  ? product.mainImage
+                                  : `/${product.mainImage}`
                                 : "/product_placeholder.jpg"
                             }
                             alt="Avatar Tailwind CSS Component"
@@ -111,7 +113,7 @@ const DashboardProductTable = () => {
                       </span>
                     )}
                   </td>
-                  <td>${product?.price}</td>
+                  <td>Rs. {product?.price}</td>
                   <th>
                     <Link
                       href={`/admin/products/${product.id}`}

@@ -44,6 +44,7 @@ const AdminSingleOrder = () => {
     orderNotice: "",
     status: "processing",
     total: 0,
+    paymentMode: "",
   });
   const params = useParams<{ id: string }>();
 
@@ -376,7 +377,7 @@ const AdminSingleOrder = () => {
                   {product?.product?.title}
                 </Link>
                 <p>
-                  ${product?.product?.price} * {product?.quantity} items
+                  Rs. {product?.product?.price} * {product?.quantity} items
                 </p>
               </div>
             </div>

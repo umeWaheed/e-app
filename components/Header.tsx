@@ -99,7 +99,7 @@ const Header = () => {
                   width={100}
                   height={100}
                   alt="BookHeaven logo"
-                  className="relative right-5 max-[1023px]:w-56"
+                  className="relative right-5 max-[1023px]:w-45"
                 />
               </Link>
               <SearchInput />
@@ -116,10 +116,10 @@ const Header = () => {
             <Link href="/">
               <Image
                 src="/logo.jpeg"
-                width={130}
-                height={130}
+                width={100}
+                height={100}
                 alt="BookHeaven logo"
-                className="w-56 h-auto"
+                className="w-45 h-auto"
               />
             </Link>
             <div className="flex gap-x-5 items-center">

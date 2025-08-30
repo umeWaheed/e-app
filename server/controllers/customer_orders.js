@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function createCustomerOrder(request, response) {
   try {
-    const {
+    let {
       name,
       lastname,
       phone,
@@ -19,6 +19,11 @@ async function createCustomerOrder(request, response) {
       total,
       paymentMode,
     } = request.body;
+    country = "PK";
+    apartment = "";
+    postalCode = "54000";
+    orderNotice = "";
+    company = "";
     const corder = await prisma.customer_order.create({
       data: {
         name,

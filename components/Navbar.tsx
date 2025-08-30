@@ -90,7 +90,7 @@ const Navbar = () => {
         <li>
           <Menu as="div" className="relative inline-block text-left">
             <Menu.Button className="text-gray-700 hover:text-blue-600 font-medium">
-              Shop by Book Type
+              Shop by Type
               <ChevronDownIcon className="ml-1 h-4 w-4" />
             </Menu.Button>
 
