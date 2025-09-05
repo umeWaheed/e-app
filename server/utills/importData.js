@@ -14,6 +14,7 @@ async function importCSV(filePath) {
     })
     .on("end", async () => {
       for (const row of records) {
+        if (row.title == "") continue;
         try {
           // Upsert category
           //   const category = await prisma.category.upsert({
@@ -23,7 +24,7 @@ async function importCSV(filePath) {
           //   });
 
           // Create product
-          console.log(row);
+          let cat = row.categories.split(",").map((name) => name.trim());
           await prisma.product.create({
             data: {
               title: row.title,
@@ -33,6 +34,12 @@ async function importCSV(filePath) {
               inStock: parseInt(row.qty),
               slug: row.handle,
               mainImage: row.src,
+              categories: {
+                connectOrCreate: cat.map((name) => ({
+                  where: { name },
+                  create: { name },
+                })),
+              },
             },
           });
 

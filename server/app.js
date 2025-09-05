@@ -25,6 +25,7 @@ app.use(
   })
 );
 app.use(fileUpload());
+app.use(express.static("public"));
 
 app.use("/api/products", productsRouter);
 app.use("/api/categories", categoryRouter);

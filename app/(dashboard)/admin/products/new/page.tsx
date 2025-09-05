@@ -259,9 +259,27 @@ const AddNewProduct = () => {
               });
             }}
           />
+        </div>
+        <div>
+          <input
+            type="text"
+            className="input input-bordered w-full max-w-xs"
+            onChange={(e: any) => {
+              setProduct({
+                ...product,
+                mainImage: e.target.value,
+              });
+            }}
+          />
           {product?.mainImage && (
             <Image
-              src={`/` + product?.mainImage}
+              src={
+                product.mainImage
+                  ? product.mainImage.startsWith("http")
+                    ? product.mainImage
+                    : `/${product.mainImage}`
+                  : "/product_placeholder.jpg"
+              }
               alt={product?.title}
               className="w-auto h-auto"
               width={100}
